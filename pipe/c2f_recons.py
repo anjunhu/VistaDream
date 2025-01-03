@@ -2,7 +2,7 @@
 render using frames in GS
 inpaint with fooocus
 '''
-import os
+import os, sys
 import torch
 import numpy as np
 from PIL import Image
@@ -193,7 +193,8 @@ class Pipeline():
 
     def __call__(self):
         rgb_fn = self.cfg.scene.input.rgb
-        dir = rgb_fn[:str.rfind(rgb_fn,'/')]
+        dir = os.path.dirname(rgb_fn)
+        os.makedirs(dir, exist_ok=True)
         # temp_interval_image
         self.coarse_interval_rgb_fn = f'{dir}/temp.coarse.interval.png'
         self.refine_interval_rgb_fn = f'{dir}/temp.refine.interval.png'
@@ -219,8 +220,9 @@ class Pipeline():
         torch.cuda.empty_cache()
         # refinement
         self._MCS_Refinement()
-        torch.save(self.scene,f'{dir}/scene.pth')
-        self.checkor._render_video(self.scene,save_dir=f'{dir}/')
+        print(f'{rgb_fn[:-4]}_scene.pth')
+        torch.save(self.scene, f'{rgb_fn[:-4]}_scene.pth')
+        self.checkor._render_video(self.scene,save_dir=f'{rgb_fn[:-4]}_')
 
     
     

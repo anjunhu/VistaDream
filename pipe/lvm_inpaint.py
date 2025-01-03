@@ -19,7 +19,8 @@ class Inpaint_Tool():
 
     def _llava_prompt(self,frame):
         prompt = '<image>\n \
-                USER: Detaily imagine and describe the scene this image taken from? \
+                USER: Detaily imagine and describe the scene this image taken from? Make sure you emphasize that this is an empty room \
+                with a bright, well lit, clear, flat floor and empty room. \
                 \n ASSISTANT: This image is taken from a scene of ' 
         return prompt   
 
@@ -50,8 +51,8 @@ class Inpaint_Tool():
         image = frame.rgb
         mask = np.zeros_like(image,bool) if len(outpaint_selections)>0 else frame.inpaint
         fooocus_result = self.fooocus(image_number=1,
-                            prompt=prompt + ' 8K, no large circles, no cameras, no fisheye.',
-                            negative_prompt='Any fisheye, any large circles, any blur, unrealism.',
+                            prompt=prompt + ' bright, well lit, 8K, no large circles, no cameras, no fisheye.',
+                            negative_prompt='dark, dimly lit, darkness, blur, unrealism, furniture, people, human, characters, uneven floor, specular surfaces, fisheye, large circles.',
                             outpaint_selections=outpaint_selections,
                             outpaint_extend_times=outpaint_extend_times,
                             origin_image=image,

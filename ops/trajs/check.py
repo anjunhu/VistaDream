@@ -4,6 +4,7 @@ from PIL import Image
 from ops.gs.basic import *
 from ops.sky import Sky_Seg_Tool
 from ops.visual_check import Check
+from ops.utils import save_ply
 from pipe.reconstruct import Reconstruct_Tool
 
 from pipe.cfgs import load_cfg
@@ -66,6 +67,7 @@ class Base_Check_Traj():
             
         imageio.mimwrite(f'{self.save_dir}video_rgb.mp4',rgbs,fps=20)
         imageio.mimwrite(f'{self.save_dir}video_dpt.mp4',dpts,fps=20)
+        # save_ply(scene,f'{self.save_dir}gf.ply')
     
     def _traj(self):
         pass

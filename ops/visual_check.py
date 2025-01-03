@@ -64,6 +64,8 @@ class Check():
         else:
             dpts = dpts[...,None].repeat(3,axis=-1)
             dpts = (dpts*255).astype(np.uint8)
-            
+        
+        print("Saving visuals to ", f'{save_dir}video_rgb.mp4', f'{save_dir}gf.ply')
         imageio.mimwrite(f'{save_dir}video_rgb.mp4',rgbs,fps=20)
         imageio.mimwrite(f'{save_dir}video_dpt.mp4',dpts,fps=20)
+        save_ply(scene,f'{save_dir}gf.ply')
